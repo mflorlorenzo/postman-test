@@ -18,7 +18,7 @@ jobs:
           mkdir SampleArtifact
 
       - name: Dependencies
-        run: npm install
+        run: npm install --force
 
       - name: Run collection
         run: |
