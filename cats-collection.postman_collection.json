@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "ef724115-fe59-47b5-9ccf-f7bc711f5bb8",
+		"name": "Cats collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26720246"
+	},
+	"item": [
+		{
+			"name": "Returns a random cat fact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()",
+							"",
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Response has -fact- key', function(){",
+							"    pm.expect(jsonData.fact).to.exist",
+							"    pm.expect(jsonData.fact).to.be.a('string')",
+							"    pm.expect(jsonData.fact).to.not.be.empty",
+							"})",
+							"",
+							"pm.test('Response has -length- key', function(){",
+							"    pm.expect(jsonData.length).to.exist",
+							"    pm.expect(jsonData.length).to.be.a('number')",
+							"    pm.expect(jsonData.length).not.to.be.null",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{fact}}?max_length={{max_length}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{fact}}"
+					],
+					"query": [
+						{
+							"key": "max_length",
+							"value": "{{max_length}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Returns a list of breeds",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{breeds}}?limit=1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{breeds}}"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a list of cat facts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()",
+							"",
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Test data type of the response', function(){",
+							"    pm.expect(jsonData).to.be.an(\"object\");",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{facts}}?limit=1&max_length={{max_length}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{facts}}"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						},
+						{
+							"key": "max_length",
+							"value": "{{max_length}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{facts}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{facts}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
