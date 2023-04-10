@@ -2,30 +2,42 @@ name: api testing
 
 on: 
   schedule:
-    # At every 5th minute" (see https://crontab.guru)
-    - cron: '*/5 * * * *'
+    # At 01:01 on every day-of-month" (see https://crontab.guru)
+    - cron: '1 1 */1 * *'
   
   workflow_dispatch:
 
 jobs:
-  build:
+  test-api:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - name: Create dir
+
+      # Install Node on the runner
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      # Install the newman command line utility and also install the html extra reporter
+      - name: Install newman
         run: |
-          mkdir SampleArtifact
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
 
-      - name: Dependencies
-        run: npm install --force
-
+      # Make directory to upload the test results
+      - name: Make Directory for results
+        run: mkdir -p testResults
+      
       - name: Run collection
         run: |
           newman run collection/cats-collection.postman_collection.json -e env/prod.postman_environment.json -r cli,htmlextra
 
-      - name: Publish report
-        uses: actions/upload-artifact@v3
+      # Upload the contents of Test Results directory to workspace
+      - name: Output the run Details
+        uses: actions/upload-artifact@v2
         with:
-          name: Reporst
-          path: SampleArtifacts
+          name: RunReports
+          path: testResults
+        
