@@ -1,0 +1,19 @@
+name: api testing
+
+on: 
+  schedule:
+    # At every 5th minute" (see https://crontab.guru)
+    - cron: '*/5 * * * *'
+  
+jobs:
+  newman-run:
+    name: Run api tests 
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Dependencies
+        run: npm install
+
+      - name: api run
+        with:
+          command: npm run test
