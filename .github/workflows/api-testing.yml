@@ -2,8 +2,8 @@ name: api testing
 
 on: 
   schedule:
-    # At every 5th minute" (see https://crontab.guru)
-    - cron: '*/5 * * * *'
+    # At 01:01 on every day-of-month" (see https://crontab.guru)
+    - cron: '1 1 */1 * *'
   
   workflow_dispatch:
 
