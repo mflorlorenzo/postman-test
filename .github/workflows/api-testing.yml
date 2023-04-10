@@ -2,30 +2,20 @@ name: api testing
 
 on: 
   schedule:
-    # At every 5th minute" (see https://crontab.guru)
-    - cron: '*/5 * * * *'
+    # At every 1 hour" (see https://crontab.guru)
+    - cron: '* */1 * * *'
   
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 2
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Create dir
-        run: |
-          mkdir SampleArtifact
-
       - name: Dependencies
-        run: npm install
+        run: npm install --force
 
       - name: Run collection
         run: |
           newman run collection/cats-collection.postman_collection.json -e env/prod.postman_environment.json -r cli,htmlextra
-
-      - name: Publish report
-        uses: actions/upload-artifact@v3
-        with:
-          name: Reporst
-          path: SampleArtifacts
