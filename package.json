@@ -4,7 +4,8 @@
   "description": "## Installation",
   "main": "index.js",
   "scripts": {
-    "test": "newman run collection/cats-collection.postman_collection.json -e env/prod.postman_environment.json -r cli,htmlextra"
+    "clean:reports": "rm -R -f newman",
+    "test": "npm run clean:reports; newman run collection/cats-collection.postman_collection.json -e env/prod.postman_environment.json -r cli,htmlextra"
   },
   "repository": {
     "type": "git",
